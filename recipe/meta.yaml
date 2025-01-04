@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
   sha256: b76e36ac9844f45d64986c9f293a4b46766a10412dc29fb43bd52d0f6661a5b0
 
 build:
@@ -14,15 +14,15 @@ build:
     - ssh-audit = ssh_audit.ssh_audit:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8,<4.0
+    - python {{ python_min }}
     - pip
     - setuptools
   run:
-    - python >=3.8,<4.0
+    - python >={{ python_min }},<4.0
 
 test:
   imports:
@@ -32,6 +32,7 @@ test:
     - ssh-audit --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/jtesta/ssh-audit

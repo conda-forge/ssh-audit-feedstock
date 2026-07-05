@@ -1,5 +1,5 @@
 {% set name = "ssh-audit" %}
-{% set version = "3.3.0" %}
+{% set version = "3.9.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: b76e36ac9844f45d64986c9f293a4b46766a10412dc29fb43bd52d0f6661a5b0
+  sha256: f1225d0364b3cb61c7dfb1f5065a6958dbb814d98b2c1dd2a779ba2cdef41f61
 
 build:
   entry_points:
     - ssh-audit = ssh_audit.ssh_audit:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 0
 
 requirements:
   host:

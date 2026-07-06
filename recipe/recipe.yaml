@@ -1,0 +1,53 @@
+schema_version: 1
+
+context:
+  name: ssh-audit
+  version: "3.9.0"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
+  sha256: f1225d0364b3cb61c7dfb1f5065a6958dbb814d98b2c1dd2a779ba2cdef41f61
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - ssh-audit = ssh_audit.ssh_audit:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+
+tests:
+  - python:
+      imports:
+        - ssh_audit
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - '*'
+  - requirements:
+      run:
+        - python ${{ python_min }}
+    script:
+      - ssh-audit --help
+
+about:
+  summary: An SSH server & client configuration security auditing tool
+  license: MIT
+  license_file: LICENSE
+  homepage: https://github.com/jtesta/ssh-audit
+
+extra:
+  recipe-maintainers:
+    - xhochy

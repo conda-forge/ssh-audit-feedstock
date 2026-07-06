@@ -38,7 +38,7 @@ tests:
         - '*'
   - requirements:
       run:
-        - python ${{ python_min }}
+        - python ${{ python_min }}.*
     script:
       - ssh-audit --help
 
